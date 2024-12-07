@@ -9,7 +9,7 @@ const TicketsPage = () => {
         title="Tickets Page"
         description="All your tickets at one place"
       />
-      <div className="animate-fade-from-top flex flex-1 flex-col items-center gap-y-4">
+      <div className="flex flex-1 animate-fade-from-top flex-col items-center gap-y-4">
         {initialTickets.map((ticket) => (
           <TicketItem key={ticket.id} ticket={ticket} />
         ))}
