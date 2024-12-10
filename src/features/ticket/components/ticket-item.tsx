@@ -1,11 +1,15 @@
 import { type Ticket } from "@prisma/client";
-import { LucideSquareArrowOutUpRight, LucideTrash } from "lucide-react";
+import {
+  LucidePen,
+  LucideSquareArrowOutUpRight,
+  LucideTrash,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TICKET_ICONS } from "@/features/ticket/constants";
 import { cn } from "@/lib/utils";
-import { ticketPath } from "@/paths";
+import { ticketEditPath, ticketPath } from "@/paths";
 import { deleteTicket } from "../actions/delete-ticket";
 
 type TicketItemProps = {
@@ -30,6 +34,15 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         <span className="sr-only">Delete ticket</span>
       </Button>
     </form>
+  );
+
+  const editButton = (
+    <Button variant="outline" size="icon" asChild>
+      <Link href={ticketEditPath(ticket.id)}>
+        <LucidePen className="h-4 w-4" />
+        <span className="sr-only">Edit ticket</span>
+      </Link>
+    </Button>
   );
 
   return (
@@ -58,7 +71,17 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         </CardContent>
       </Card>
       <div className="flex flex-col gap-y-1">
-        {isDetail ? deleteButton : detailButton}
+        {isDetail ? (
+          <>
+            {deleteButton}
+            {editButton}
+          </>
+        ) : (
+          <>
+            {detailButton}
+            {editButton}
+          </>
+        )}
       </div>
     </div>
   );

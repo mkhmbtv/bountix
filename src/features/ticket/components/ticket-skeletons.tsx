@@ -23,6 +23,7 @@ const TicketItemSkeleton = ({ isDetail }: { isDetail?: boolean }) => {
       </Card>
       <div className="flex flex-col gap-y-1">
         <Skeleton className="h-9 w-9" />
+        <Skeleton className="h-9 w-9" />
       </div>
     </div>
   );
