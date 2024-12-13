@@ -61,6 +61,43 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
       />
       <ErrorList errors={actionState.fieldErrors.content} id="content-error" />
 
+      <div className="mb-2 flex gap-x-2">
+        <div className="w-1/2">
+          <Label htmlFor="deadline">Deadline</Label>
+          <Input
+            id="deadline"
+            type="date"
+            name="deadline"
+            defaultValue={
+              (actionState.payload?.get("deadline") as string) ??
+              ticket?.deadline
+            }
+            aria-describedby="deadline-error"
+          />
+          <ErrorList
+            errors={actionState.fieldErrors.deadline}
+            id="deadline-error"
+          />
+        </div>
+        <div>
+          <Label htmlFor="bounty">Bounty ($)</Label>
+          <Input
+            id="bounty"
+            type="number"
+            name="bounty"
+            step=".01"
+            defaultValue={
+              (actionState.payload?.get("bounty") as string) ?? ticket?.bounty
+            }
+            aria-describedby="bounty-error"
+          />
+          <ErrorList
+            errors={actionState.fieldErrors.bounty}
+            id="bounty-error"
+          />
+        </div>
+      </div>
+
       <Button type="submit">
         {isPending && (
           <LucideLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
