@@ -4,6 +4,7 @@ import { Ticket } from "@prisma/client";
 import { LucideLoaderCircle } from "lucide-react";
 import { useActionState } from "react";
 import { toast } from "sonner";
+import { DatePicker } from "@/components/date-picker";
 import { ErrorList } from "@/components/form/field-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,24 +64,23 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
       <ErrorList errors={actionState.fieldErrors.content} id="content-error" />
 
       <div className="mb-2 flex gap-x-2">
-        <div className="w-1/2">
+        <div className="flex-1">
           <Label htmlFor="deadline">Deadline</Label>
-          <Input
+          <DatePicker
             id="deadline"
-            type="date"
             name="deadline"
             defaultValue={
               (actionState.payload?.get("deadline") as string) ??
               ticket?.deadline
             }
-            aria-describedby="deadline-error"
+            ariaDescribedBy="deadline-error"
           />
           <ErrorList
             errors={actionState.fieldErrors.deadline}
             id="deadline-error"
           />
         </div>
-        <div>
+        <div className="flex-1">
           <Label htmlFor="bounty">Bounty ($)</Label>
           <Input
             id="bounty"
