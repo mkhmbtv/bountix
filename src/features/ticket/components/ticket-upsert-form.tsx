@@ -2,9 +2,9 @@
 
 import { Ticket } from "@prisma/client";
 import { LucideLoaderCircle } from "lucide-react";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { toast } from "sonner";
-import { DatePicker } from "@/components/date-picker";
+import { DatePicker,type DatePickerHandle } from "@/components/date-picker";
 import { ErrorList } from "@/components/form/field-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,11 +25,19 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
     EMPTY_ACTION_STATE,
   );
 
+  const datePickerRef = useRef<DatePickerHandle>(null);
+
+  const handleSuccess = () => {
+    datePickerRef.current?.reset();
+  };
+
   useActionFeedback(actionState, {
     onSuccess: ({ actionState }) => {
       if (actionState.message) {
         toast.success(actionState.message);
       }
+
+      handleSuccess();
     },
     onError: ({ actionState }) => {
       if (actionState.message) {
@@ -67,6 +75,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
         <div className="flex-1">
           <Label htmlFor="deadline">Deadline</Label>
           <DatePicker
+            ref={datePickerRef}
             id="deadline"
             name="deadline"
             defaultValue={
