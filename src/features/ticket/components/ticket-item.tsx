@@ -1,5 +1,6 @@
 import { type Ticket } from "@prisma/client";
 import {
+  LucideMoreVertical,
   LucidePen,
   LucideSquareArrowOutUpRight,
   LucideTrash,
@@ -18,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 import { deleteTicket } from "../actions/delete-ticket";
+import { TicketDropdownMenu } from "./ticket-dropdown-menu";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -50,6 +52,18 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         <span className="sr-only">Edit ticket</span>
       </Link>
     </Button>
+  );
+
+  const ticketMenu = (
+    <TicketDropdownMenu
+      ticket={ticket}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideMoreVertical className="h-4 w-4" />
+          <span className="sr-only">Open ticket dropdown menu</span>
+        </Button>
+      }
+    />
   );
 
   return (
@@ -88,6 +102,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
           <>
             {deleteButton}
             {editButton}
+            {ticketMenu}
           </>
         ) : (
           <>
