@@ -3,14 +3,13 @@
 import { Ticket } from "@prisma/client";
 import { LucideLoaderCircle } from "lucide-react";
 import { useActionState, useRef } from "react";
-import { toast } from "sonner";
-import { DatePicker,type DatePickerHandle } from "@/components/date-picker";
+import { DatePicker, type DatePickerHandle } from "@/components/date-picker";
 import { ErrorList } from "@/components/form/field-error";
+import { Form } from "@/components/form/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { EMPTY_ACTION_STATE } from "@/lib/action-state";
 import { fromCent } from "@/utils/currency";
 import { upsertTicket } from "../actions/upsert-ticket";
@@ -31,23 +30,8 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
     datePickerRef.current?.reset();
   };
 
-  useActionFeedback(actionState, {
-    onSuccess: ({ actionState }) => {
-      if (actionState.message) {
-        toast.success(actionState.message);
-      }
-
-      handleSuccess();
-    },
-    onError: ({ actionState }) => {
-      if (actionState.message) {
-        toast.error(actionState.message);
-      }
-    },
-  });
-
   return (
-    <form action={action} className="flex flex-col gap-y-2">
+    <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"
@@ -115,7 +99,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
         )}
         {ticket ? "Edit" : "Create"}
       </Button>
-    </form>
+    </Form>
   );
 };
 

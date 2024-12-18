@@ -1,6 +1,8 @@
 "use client";
 
-import { cloneElement, useState } from "react";
+import { LucideLoaderCircle } from "lucide-react";
+import { cloneElement, useActionState, useState } from "react";
+import { Form } from "@/components/form/form";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,9 +14,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { ActionState, EMPTY_ACTION_STATE } from "@/lib/action-state";
 
 type UseConfirmDialogProps = {
-  action: () => void;
+  action: () => Promise<ActionState>;
   trigger: React.ReactElement;
   title?: string;
   description?: string;
@@ -26,11 +29,19 @@ const useConfirmDialog = ({
   title = "Are you sure?",
   description = "This action cannot be undone. Please confirm to proceed.",
 }: UseConfirmDialogProps) => {
+  const [actionState, formAction, isPending] = useActionState(
+    action,
+    EMPTY_ACTION_STATE,
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const dialogTrigger = cloneElement(trigger, {
     onClick: () => setIsOpen((state) => !state),
   });
+
+  const handleSuccess = () => {
+    setIsOpen(false);
+  };
 
   const dialog = (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -42,9 +53,18 @@ const useConfirmDialog = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <form action={action}>
-              <Button type="submit">Confirm</Button>
-            </form>
+            <Form
+              action={formAction}
+              actionState={actionState}
+              onSuccess={handleSuccess}
+            >
+              <Button type="submit">
+                {isPending && (
+                  <LucideLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Confirm
+              </Button>
+            </Form>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
