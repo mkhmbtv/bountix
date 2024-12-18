@@ -3,7 +3,6 @@ import {
   LucideMoreVertical,
   LucidePen,
   LucideSquareArrowOutUpRight,
-  LucideTrash,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,6 @@ import { TICKET_ICONS } from "@/features/ticket/constants";
 import { cn } from "@/lib/utils";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
-import { deleteTicket } from "../actions/delete-ticket";
 import { TicketDropdownMenu } from "./ticket-dropdown-menu";
 
 type TicketItemProps = {
@@ -34,15 +32,6 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         <span className="sr-only">View</span>
       </Link>
     </Button>
-  );
-
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant="outline" size="icon">
-        <LucideTrash className="h-4 w-4" />
-        <span className="sr-only">Delete ticket</span>
-      </Button>
-    </form>
   );
 
   const editButton = (
@@ -100,7 +89,6 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
       <div className="flex flex-col gap-y-1">
         {isDetail ? (
           <>
-            {deleteButton}
             {editButton}
             {ticketMenu}
           </>

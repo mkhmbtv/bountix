@@ -12,6 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { deleteTicket } from "../actions/delete-ticket";
 import { updateTicketStatus } from "../actions/update-ticket-status";
 import { TICKET_STATUS_LABELS } from "../constants";
 
@@ -21,12 +23,15 @@ type TicketDropdownMenuProps = {
 };
 
 const TicketDropdownMenu = ({ ticket, trigger }: TicketDropdownMenuProps) => {
-  const deleteButton = (
-    <DropdownMenuItem>
-      <LucideTrash className="mr-2 h-4 w-4" />
-      <span>Delete</span>
-    </DropdownMenuItem>
-  );
+  const [deleteButton, deleteDialog] = useConfirmDialog({
+    action: deleteTicket.bind(null, ticket.id),
+    trigger: (
+      <DropdownMenuItem>
+        <LucideTrash className="h-4 w-4" />
+        <span>Delete ticket</span>
+      </DropdownMenuItem>
+    ),
+  });
 
   const handleStatusUpdate = async (status: string) => {
     const promise = updateTicketStatus(ticket.id, status as TicketStatus);
@@ -45,25 +50,28 @@ const TicketDropdownMenu = ({ ticket, trigger }: TicketDropdownMenuProps) => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent side="right" className="w-56">
-        <DropdownMenuRadioGroup
-          value={ticket.status}
-          onValueChange={handleStatusUpdate}
-        >
-          {(Object.keys(TICKET_STATUS_LABELS) as Array<TicketStatus>).map(
-            (status) => (
-              <DropdownMenuRadioItem key={status} value={status}>
-                {TICKET_STATUS_LABELS[status]}
-              </DropdownMenuRadioItem>
-            ),
-          )}
-        </DropdownMenuRadioGroup>
-        <DropdownMenuSeparator />
-        {deleteButton}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      {deleteDialog}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+        <DropdownMenuContent side="right" className="w-56">
+          <DropdownMenuRadioGroup
+            value={ticket.status}
+            onValueChange={handleStatusUpdate}
+          >
+            {(Object.keys(TICKET_STATUS_LABELS) as Array<TicketStatus>).map(
+              (status) => (
+                <DropdownMenuRadioItem key={status} value={status}>
+                  {TICKET_STATUS_LABELS[status]}
+                </DropdownMenuRadioItem>
+              ),
+            )}
+          </DropdownMenuRadioGroup>
+          <DropdownMenuSeparator />
+          {deleteButton}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };
 
