@@ -1,6 +1,6 @@
 import { LucideKanban } from "lucide-react";
 import Link from "next/link";
-import { homePath, ticketsPath } from "@/paths";
+import { homePath, signInPath, signUpPath, ticketsPath } from "@/paths";
 import { ThemeSwitcher } from "./theme/theme-switcher";
 import { buttonVariants } from "./ui/button";
 
@@ -23,6 +23,18 @@ const Header = () => {
           className={buttonVariants({ variant: "default" })}
         >
           Tickets
+        </Link>
+        <Link
+          href={signUpPath()}
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Sign Up
+        </Link>
+        <Link
+          href={signInPath()}
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Sign In
         </Link>
       </div>
     </header>
