@@ -4,8 +4,6 @@ import {
   encodeHexLowerCase,
 } from "@oslojs/encoding";
 import type { Session, User } from "@prisma/client";
-import { cookies } from "next/headers";
-import { cache } from "react";
 import { prisma } from "./prisma";
 
 const SESSION_REFRESH_INTERVAL_MS = 1000 * 60 * 60 * 24 * 15; // 15 days
@@ -73,18 +71,6 @@ export async function validateSessionToken(
 export async function invalidateSession(sessionId: string): Promise<void> {
   await prisma.session.delete({ where: { id: sessionId } });
 }
-
-export const getCurrentSession = cache(
-  async (): Promise<SessionValidationResult> => {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("session")?.value ?? null;
-    if (token === null) {
-      return { session: null, user: null };
-    }
-    const result = await validateSessionToken(token);
-    return result;
-  },
-);
 
 export type SessionValidationResult =
   | { session: Session; user: User }
