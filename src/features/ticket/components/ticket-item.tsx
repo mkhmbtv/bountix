@@ -1,4 +1,4 @@
-import { type Ticket } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import {
   LucideMoreVertical,
   LucidePen,
@@ -20,7 +20,15 @@ import { toCurrencyFromCent } from "@/utils/currency";
 import { TicketDropdownMenu } from "./ticket-dropdown-menu";
 
 type TicketItemProps = {
-  ticket: Ticket;
+  ticket: Prisma.TicketGetPayload<{
+    include: {
+      user: {
+        select: {
+          username: true;
+        };
+      };
+    };
+  }>;
   isDetail?: boolean;
 };
 
@@ -80,7 +88,9 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
           </p>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
+          <p className="text-sm text-muted-foreground">
+            {ticket.deadline} by {ticket.user.username}
+          </p>
           <p className="text-sm text-muted-foreground">
             {toCurrencyFromCent(ticket.bounty)}
           </p>

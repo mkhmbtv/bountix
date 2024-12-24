@@ -4,13 +4,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { setCookieByKey } from "@/actions/cookies";
+import { getCurrentSession } from "@/features/auth/actions/get-current-session";
 import {
   type ActionState,
   errorToActionState,
   toActionState,
 } from "@/lib/action-state";
 import { prisma } from "@/lib/prisma";
-import { ticketPath, ticketsPath } from "@/paths";
+import { signInPath, ticketPath, ticketsPath } from "@/paths";
 import { toCent } from "@/utils/currency";
 
 const upsertTicketSchema = z.object({
@@ -25,6 +26,12 @@ export const upsertTicket = async (
   _prevState: ActionState,
   formData: FormData,
 ) => {
+  const { user } = await getCurrentSession();
+
+  if (!user) {
+    redirect(signInPath());
+  }
+
   try {
     const data = upsertTicketSchema.parse({
       title: formData.get("title"),
@@ -35,6 +42,7 @@ export const upsertTicket = async (
 
     const dbData = {
       ...data,
+      userId: user.id,
       bounty: toCent(data.bounty),
     };
 
