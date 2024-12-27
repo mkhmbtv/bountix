@@ -4,9 +4,9 @@ import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import {
-  type ActionState,
   errorToActionState,
   toActionState,
+  validatedAction,
 } from "@/lib/action-state";
 import { prisma } from "@/lib/prisma";
 import { createSession, generateSessionToken } from "@/lib/session";
@@ -38,11 +38,9 @@ const signUpSchema = z
     }
   });
 
-export const signUp = async (_prevState: ActionState, formData: FormData) => {
+export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   try {
-    const { username, email, password } = signUpSchema.parse(
-      Object.fromEntries(formData),
-    );
+    const { username, email, password } = data;
 
     const passwordHash = await hashPassword(password);
 
@@ -73,4 +71,4 @@ export const signUp = async (_prevState: ActionState, formData: FormData) => {
   }
 
   redirect(ticketsPath());
-};
+});

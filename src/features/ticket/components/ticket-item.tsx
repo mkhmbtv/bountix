@@ -13,6 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getCurrentSession } from "@/features/auth/actions/get-current-session";
+import { isOwner } from "@/features/auth/utils/user";
 import { TICKET_ICONS } from "@/features/ticket/constants";
 import { cn } from "@/lib/utils";
 import { ticketEditPath, ticketPath } from "@/paths";
@@ -32,7 +34,10 @@ type TicketItemProps = {
   isDetail?: boolean;
 };
 
-const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
+const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
+  const { user } = await getCurrentSession();
+  const isTicketOwner = isOwner(user, ticket);
+
   const detailButton = (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketPath(ticket.id)}>
@@ -42,16 +47,16 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   );
 
-  const editButton = (
+  const editButton = isTicketOwner ? (
     <Button variant="outline" size="icon" asChild>
       <Link href={ticketEditPath(ticket.id)}>
         <LucidePen className="h-4 w-4" />
         <span className="sr-only">Edit ticket</span>
       </Link>
     </Button>
-  );
+  ) : null;
 
-  const ticketMenu = (
+  const ticketMenu = isTicketOwner ? (
     <TicketDropdownMenu
       ticket={ticket}
       trigger={
@@ -61,7 +66,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         </Button>
       }
     />
-  );
+  ) : null;
 
   return (
     <div

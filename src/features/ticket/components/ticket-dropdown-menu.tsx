@@ -24,13 +24,14 @@ type TicketDropdownMenuProps = {
 
 const TicketDropdownMenu = ({ ticket, trigger }: TicketDropdownMenuProps) => {
   const [deleteButton, deleteDialog] = useConfirmDialog({
-    action: deleteTicket.bind(null, ticket.id),
+    action: deleteTicket,
     trigger: (
       <DropdownMenuItem>
         <LucideTrash className="h-4 w-4" />
         <span>Delete ticket</span>
       </DropdownMenuItem>
     ),
+    formFields: <input type="hidden" name="id" value={ticket.id} />,
   });
 
   const handleStatusUpdate = async (status: string) => {

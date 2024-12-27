@@ -20,7 +20,7 @@ type TicketUpsertFormProps = {
 
 const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
   const [actionState, action, isPending] = useActionState(
-    upsertTicket.bind(null, ticket?.id),
+    upsertTicket,
     EMPTY_ACTION_STATE,
   );
 
@@ -32,6 +32,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
 
   return (
     <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
+      {ticket && <input type="hidden" name="id" value={ticket.id} />}
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"

@@ -17,10 +17,11 @@ import { Button } from "@/components/ui/button";
 import { ActionState, EMPTY_ACTION_STATE } from "@/lib/action-state";
 
 type UseConfirmDialogProps = {
-  action: () => Promise<ActionState>;
+  action: (state: ActionState, formData: FormData) => Promise<ActionState>;
   trigger: React.ReactElement;
   title?: string;
   description?: string;
+  formFields?: React.ReactNode;
 };
 
 const useConfirmDialog = ({
@@ -28,6 +29,7 @@ const useConfirmDialog = ({
   trigger,
   title = "Are you sure?",
   description = "This action cannot be undone. Please confirm to proceed.",
+  formFields,
 }: UseConfirmDialogProps) => {
   const [actionState, formAction, isPending] = useActionState(
     action,
@@ -59,6 +61,7 @@ const useConfirmDialog = ({
               onSuccess={handleSuccess}
             >
               <Button type="submit">
+                {formFields}
                 {isPending && (
                   <LucideLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
                 )}

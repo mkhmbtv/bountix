@@ -6,6 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getCurrentSession } from "@/features/auth/actions/get-current-session";
+import { isOwner } from "@/features/auth/utils/user";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
 
@@ -17,7 +19,12 @@ const EditTicketPage = async ({
   const ticketId = (await params).ticketId;
   const ticket = await getTicket(ticketId);
 
-  if (!ticket) {
+  const { user } = await getCurrentSession();
+
+  const isTicketFound = !!ticket;
+  const isTicketOwner = isOwner(user, ticket);
+
+  if (!isTicketFound || !isTicketOwner) {
     return notFound();
   }
 

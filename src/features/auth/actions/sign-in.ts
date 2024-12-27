@@ -3,9 +3,9 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import {
-  ActionState,
   errorToActionState,
   toActionState,
+  validatedAction,
 } from "@/lib/action-state";
 import { prisma } from "@/lib/prisma";
 import { createSession, generateSessionToken } from "@/lib/session";
@@ -18,11 +18,9 @@ const signInSchema = z.object({
   password: z.string().min(6).max(191),
 });
 
-export const signIn = async (_prevState: ActionState, formData: FormData) => {
+export const signIn = validatedAction(signInSchema, async (data, formData) => {
   try {
-    const { email, password } = signInSchema.parse(
-      Object.fromEntries(formData),
-    );
+    const { email, password } = data;
 
     const user = await prisma.user.findUnique({
       where: {
@@ -49,4 +47,4 @@ export const signIn = async (_prevState: ActionState, formData: FormData) => {
   }
 
   redirect(ticketsPath());
-};
+});
