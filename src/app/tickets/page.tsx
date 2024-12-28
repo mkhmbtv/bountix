@@ -7,11 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getCurrentSession } from "@/features/auth/actions/get-current-session";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketsSkeleton } from "@/features/ticket/components/ticket-skeletons";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
 
 const TicketsPage = async () => {
+  const { user } = await getCurrentSession();
+
   return (
     <div className="flex flex-1 flex-col gap-y-8">
       <Heading
@@ -28,7 +31,7 @@ const TicketsPage = async () => {
         </CardContent>
       </Card>
       <Suspense fallback={<TicketsSkeleton />}>
-        <TicketList />
+        <TicketList userId={user?.id} />
       </Suspense>
     </div>
   );
