@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   description: "My TicketBounty application",
 };
 
+const HEADER_HEIGHT = "4rem";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,6 +37,11 @@ export default function RootLayout({
     >
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+        style={
+          {
+            "--header-height": HEADER_HEIGHT,
+          } as React.CSSProperties
+        }
       >
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">

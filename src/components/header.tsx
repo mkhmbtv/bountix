@@ -13,7 +13,7 @@ const Header = () => {
   const { user, isLoading } = useSession();
 
   return (
-    <header className="sticky top-0 z-50 flex h-16 w-full justify-between border-b border-border bg-background/80 px-5 backdrop-blur-sm">
+    <header className="sticky top-0 isolate z-50 flex h-[--header-height] justify-between border-b border-border bg-background/80 px-5 backdrop-blur-sm">
       <div className="flex items-center gap-x-2">
         <Link
           href={homePath()}
@@ -27,8 +27,8 @@ const Header = () => {
         <ThemeSwitcher />
         {isLoading ? (
           <>
-            <Skeleton className="h-10 w-20" />
-            <Skeleton className="h-10 w-20" />
+            <Skeleton className="h-10 w-24" />
+            <Skeleton className="h-10 w-24" />
           </>
         ) : user ? (
           <>
