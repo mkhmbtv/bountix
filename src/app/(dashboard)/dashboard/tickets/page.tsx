@@ -16,23 +16,25 @@ const TicketsPage = async () => {
   const { user } = await getCurrentSession();
 
   return (
-    <div className="flex flex-1 flex-col gap-y-8">
+    <div className="flex flex-col gap-y-8 px-8 py-24">
       <Heading
         title="Tickets Page"
         description="All your tickets at one place"
       />
-      <Card className="w-full max-w-[420px] self-center">
-        <CardHeader>
-          <CardTitle>Create Ticket</CardTitle>
-          <CardDescription>A new ticket will be created</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <TicketUpsertForm />
-        </CardContent>
-      </Card>
-      <Suspense fallback={<TicketsSkeleton />}>
-        <TicketList userId={user?.id} />
-      </Suspense>
+      <main className="flex flex-col gap-y-8">
+        <Card className="w-full max-w-[420px] self-center">
+          <CardHeader>
+            <CardTitle>Create Ticket</CardTitle>
+            <CardDescription>A new ticket will be created</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <TicketUpsertForm />
+          </CardContent>
+        </Card>
+        <Suspense fallback={<TicketsSkeleton />}>
+          <TicketList userId={user?.id} />
+        </Suspense>
+      </main>
     </div>
   );
 };

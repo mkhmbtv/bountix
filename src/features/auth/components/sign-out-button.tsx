@@ -4,7 +4,7 @@ import { LucideLoaderCircle, LucideLogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
-import { signInPath } from "@/paths";
+import { homePath } from "@/paths";
 import { signOut } from "../actions/sign-out";
 
 const SignOutButton = () => {
@@ -12,7 +12,7 @@ const SignOutButton = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    router.push(signInPath());
+    router.push(homePath());
   };
 
   return (

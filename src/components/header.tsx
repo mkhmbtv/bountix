@@ -4,19 +4,16 @@ import { LucideKanban } from "lucide-react";
 import Link from "next/link";
 import { SignOutButton } from "@/features/auth/components/sign-out-button";
 import { useSession } from "@/features/auth/hooks/use-session";
-import { homePath, signInPath, signUpPath, ticketsPath } from "@/paths";
+import { dashboardPath, homePath, signInPath, signUpPath } from "@/paths";
 import { ThemeSwitcher } from "./theme/theme-switcher";
 import { buttonVariants } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 const Header = () => {
   const { user, isLoading } = useSession();
 
-  if (isLoading) {
-    return null;
-  }
-
   return (
-    <header className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 flex w-full animate-header-from-top justify-between border-b bg-background/95 px-5 py-2.5 backdrop-blur">
+    <header className="sticky top-0 z-50 flex h-16 w-full justify-between border-b border-border bg-background/80 px-5 backdrop-blur-sm">
       <div className="flex items-center gap-x-2">
         <Link
           href={homePath()}
@@ -28,13 +25,18 @@ const Header = () => {
       </div>
       <div className="flex items-center gap-x-2">
         <ThemeSwitcher />
-        {user ? (
+        {isLoading ? (
+          <>
+            <Skeleton className="h-10 w-20" />
+            <Skeleton className="h-10 w-20" />
+          </>
+        ) : user ? (
           <>
             <Link
-              href={ticketsPath()}
+              href={dashboardPath()}
               className={buttonVariants({ variant: "default" })}
             >
-              Tickets
+              Dashboard
             </Link>
             <SignOutButton />
           </>

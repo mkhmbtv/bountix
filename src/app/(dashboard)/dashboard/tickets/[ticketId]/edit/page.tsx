@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Heading } from "@/components/heading";
 import {
   Card,
   CardContent,
@@ -29,16 +30,19 @@ const EditTicketPage = async ({
   }
 
   return (
-    <div className="flex flex-1 animate-fade-from-top flex-col items-center justify-center">
-      <Card className="w-full max-w-[420px]">
-        <CardHeader>
-          <CardTitle>Edit Ticket</CardTitle>
-          <CardDescription>Edit an existing ticket</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <TicketUpsertForm ticket={ticket} />
-        </CardContent>
-      </Card>
+    <div className="flex flex-col items-center justify-center gap-y-8 px-8 py-24">
+      <Heading title="Edit your ticket" className="w-full self-start" />
+      <main className="">
+        <Card className="w-full max-w-[420px] animate-fade-from-top">
+          <CardHeader>
+            <CardTitle>Edit Ticket</CardTitle>
+            <CardDescription>Edit an existing ticket</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <TicketUpsertForm ticket={ticket} />
+          </CardContent>
+        </Card>
+      </main>
     </div>
   );
 };

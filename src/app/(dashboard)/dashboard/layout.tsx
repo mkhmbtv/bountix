@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentSession } from "@/features/auth/actions/get-current-session";
-import { signInPath } from "@/paths";
+import { signUpPath } from "@/paths";
 
 export default async function AuthenticatedLayout({
   children,
@@ -10,7 +10,7 @@ export default async function AuthenticatedLayout({
   const { user } = await getCurrentSession();
 
   if (!user) {
-    redirect(signInPath());
+    redirect(signUpPath());
   }
 
   return <>{children}</>;

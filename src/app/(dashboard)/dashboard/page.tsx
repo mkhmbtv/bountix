@@ -3,18 +3,20 @@ import { Heading } from "@/components/heading";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketsSkeleton } from "@/features/ticket/components/ticket-skeletons";
 
-const HomePage = () => {
+const DashboardPage = () => {
   return (
-    <div className="flex flex-1 flex-col gap-y-8">
+    <div className="flex flex-col gap-y-8 px-8 py-24">
       <Heading
-        title="Home Page"
+        title="Browse all tickets"
         description="Tickets by everyone at one place"
       />
-      <Suspense fallback={<TicketsSkeleton />}>
-        <TicketList />
-      </Suspense>
+      <main>
+        <Suspense fallback={<TicketsSkeleton />}>
+          <TicketList />
+        </Suspense>
+      </main>
     </div>
   );
 };
 
-export default HomePage;
+export default DashboardPage;

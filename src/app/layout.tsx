@@ -28,15 +28,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="h-full overflow-x-hidden"
+      suppressHydrationWarning
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex h-full flex-col antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
       >
         <ThemeProvider>
-          <Header />
-          <main className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-secondary/20 px-8 py-24">
-            {children}
-          </main>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <div className="flex-1">{children}</div>
+          </div>
           <Toaster expand richColors />
         </ThemeProvider>
       </body>

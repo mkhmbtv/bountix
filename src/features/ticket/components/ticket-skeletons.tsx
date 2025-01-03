@@ -31,7 +31,7 @@ const TicketItemSkeleton = ({ isDetail }: { isDetail?: boolean }) => {
 
 const TicketsSkeleton = () => {
   return (
-    <div className="flex flex-1 flex-col items-center gap-y-4">
+    <div className="flex flex-col items-center gap-y-4">
       {[1, 2, 3].map((ticket) => (
         <TicketItemSkeleton key={ticket} />
       ))}
@@ -41,7 +41,7 @@ const TicketsSkeleton = () => {
 
 const TicketSkeleton = () => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center py-24">
       <TicketItemSkeleton isDetail />
     </div>
   );

@@ -15,9 +15,9 @@ const TicketPage = async ({
   }
 
   return (
-    <div className="flex animate-fade-from-top justify-center">
+    <main className="flex animate-fade-from-top justify-center py-24">
       <TicketItem ticket={ticket} isDetail />
-    </div>
+    </main>
   );
 };
 

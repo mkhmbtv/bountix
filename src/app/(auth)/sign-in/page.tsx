@@ -12,7 +12,7 @@ import { passwordForgotPath, signUpPath } from "@/paths";
 
 export default function SignInPage() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center">
+    <main className="flex flex-col items-center justify-center py-20">
       <Card className="w-full max-w-[420px] animate-fade-from-top">
         <CardHeader>
           <CardTitle>Sign In</CardTitle>
@@ -30,6 +30,6 @@ export default function SignInPage() {
           </Link>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   );
 }
