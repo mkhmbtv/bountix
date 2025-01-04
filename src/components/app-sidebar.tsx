@@ -1,5 +1,5 @@
 import { LucideBook, LucideLibrary } from "lucide-react";
-
+import Link from "next/link";
 import {
   Sidebar,
   SidebarContent,
@@ -10,7 +10,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { dashboardPath, ticketsPath } from "@/paths";
-import Link from "next/link";
 
 // Menu items.
 const items = [
