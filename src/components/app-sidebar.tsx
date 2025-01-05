@@ -1,4 +1,4 @@
-import { LucideBook, LucideLibrary } from "lucide-react";
+import { LucideBook, LucideCircleUser, LucideLibrary } from "lucide-react";
 import Link from "next/link";
 import {
   Sidebar,
@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { dashboardPath, ticketsPath } from "@/paths";
+import { accountProfilePath, dashboardPath, ticketsPath } from "@/paths";
 
 // Menu items.
 const items = [
@@ -22,6 +22,11 @@ const items = [
     title: "My Tickets",
     url: ticketsPath(),
     icon: LucideBook,
+  },
+  {
+    title: "Account",
+    url: accountProfilePath(),
+    icon: LucideCircleUser,
   },
 ];
 
