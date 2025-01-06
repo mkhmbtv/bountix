@@ -1,5 +1,8 @@
+"use client";
+
 import { LucideBook, LucideCircleUser, LucideLibrary } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -30,7 +33,16 @@ const items = [
   },
 ];
 
+const isMenuItemActive = (pathname: string, itemUrl: string) => {
+  if (itemUrl === accountProfilePath()) {
+    return pathname.startsWith("/dashboard/account");
+  } else {
+    return pathname === itemUrl;
+  }
+};
+
 export function AppSidebar() {
+  const pathname = usePathname();
   return (
     <Sidebar
       collapsible="icon"
@@ -42,7 +54,11 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isMenuItemActive(pathname, item.url)}
+                    tooltip={item.title}
+                  >
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
