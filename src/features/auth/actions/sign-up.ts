@@ -10,7 +10,7 @@ import {
 } from "@/lib/action-state";
 import { prisma } from "@/lib/prisma";
 import { createSession, generateSessionToken } from "@/lib/session";
-import { ticketsPath } from "@/paths";
+import { dashboardPath } from "@/paths";
 import { hashPassword } from "../utils/password";
 import { setSessionTokenCookie } from "../utils/session-cookie";
 
@@ -70,5 +70,5 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     return errorToActionState(error, formData);
   }
 
-  redirect(ticketsPath());
+  redirect(dashboardPath());
 });

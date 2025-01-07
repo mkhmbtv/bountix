@@ -11,6 +11,7 @@ function useSession() {
     user: null,
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [updateSession, setUpdateSession] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -28,9 +29,13 @@ function useSession() {
     }
 
     fetchSession();
-  }, [pathname]);
+  }, [pathname, updateSession]);
 
-  return { ...sessionData, isLoading };
+  const triggerSessionUpdate = () => {
+    setUpdateSession((prev) => !prev); // Toggle the trigger
+  };
+
+  return { ...sessionData, isLoading, triggerSessionUpdate };
 }
 
 export { useSession };
