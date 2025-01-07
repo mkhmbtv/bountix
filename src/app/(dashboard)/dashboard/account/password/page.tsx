@@ -3,7 +3,7 @@ import { AccountTabs } from "@/features/account/components/account-tabs";
 
 const PasswordPage = () => {
   return (
-    <section className="flex flex-col px-8">
+    <section className="flex flex-col px-8 pt-24">
       <Heading title="Password" description="Change your password here.">
         <AccountTabs />
       </Heading>

@@ -8,7 +8,7 @@ export default function LandingPage() {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent py-24 text-foreground">
+        <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent pb-24 pt-40 text-foreground">
           <div className="container relative z-10 mx-auto px-4 text-center">
             <h1 className="mb-6 bg-gradient-to-r from-primary to-primary-foreground bg-clip-text text-5xl font-extrabold leading-tight text-transparent md:text-7xl">
               Manage Your Projects with Ease

@@ -1,16 +1,25 @@
 "use client";
 
-import { LucideBook, LucideCircleUser, LucideLibrary } from "lucide-react";
+import {
+  LucideBook,
+  LucideCircleUser,
+  LucideKanban,
+  LucideLibrary,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { accountProfilePath, dashboardPath, ticketsPath } from "@/paths";
 
@@ -42,12 +51,20 @@ const isMenuItemActive = (pathname: string, itemUrl: string) => {
 };
 
 export function AppSidebar() {
+  const { state } = useSidebar();
   const pathname = usePathname();
+
   return (
     <Sidebar
       collapsible="icon"
       className="top-[--header-height] pb-[--header-height]"
     >
+      <SidebarHeader className="flex flex-row items-center justify-between">
+        <Link href={dashboardPath()}>
+          <LucideKanban className="h-7 w-7" />
+        </Link>
+        {state === "expanded" && <SidebarTrigger />}
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -70,6 +87,11 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      {state === "collapsed" && (
+        <SidebarFooter>
+          <SidebarTrigger />
+        </SidebarFooter>
+      )}
     </Sidebar>
   );
 }

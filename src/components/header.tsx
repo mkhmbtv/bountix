@@ -1,6 +1,11 @@
 "use client";
 
-import { LucideKanban, LucideLock, LucideUser } from "lucide-react";
+import {
+  LucideHouse,
+  LucideKanban,
+  LucideLock,
+  LucideUser,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { SignOutButton } from "@/features/auth/components/sign-out-button";
@@ -8,6 +13,7 @@ import { useSession } from "@/features/auth/hooks/use-session";
 import {
   accountPasswordPath,
   accountProfilePath,
+  dashboardPath,
   homePath,
   signUpPath,
 } from "@/paths";
@@ -28,7 +34,7 @@ const Header = () => {
   const { user, triggerSessionUpdate } = useSession();
 
   return (
-    <header className="sticky top-0 isolate z-50 flex h-[--header-height] justify-between border-b border-border bg-background/80 px-5 backdrop-blur-sm">
+    <header className="fixed left-0 right-0 top-0 z-50 flex h-[--header-height] justify-between border-b border-border bg-background/80 px-5 backdrop-blur-sm">
       <div className="flex items-center gap-x-2">
         <Link
           href={homePath()}
@@ -59,6 +65,15 @@ const Header = () => {
             >
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer">
+                <Link
+                  href={dashboardPath()}
+                  className="flex w-full items-center"
+                >
+                  <LucideHouse className="mr-2 h-4 w-4" />
+                  <span>Dashboard</span>
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <Link
                   href={accountProfilePath()}
