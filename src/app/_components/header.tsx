@@ -8,6 +8,17 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { Avatar, AvatarFallback,AvatarImage } from "@/components/ui/avatar";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { SignOutButton } from "@/features/auth/components/sign-out-button";
 import { useSession } from "@/features/auth/hooks/use-session";
 import {
@@ -17,17 +28,6 @@ import {
   homePath,
   signUpPath,
 } from "@/paths";
-import { ThemeSwitcher } from "./theme/theme-switcher";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { buttonVariants } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

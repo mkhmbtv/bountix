@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { accountPasswordPath,accountProfilePath } from "@/paths";
+import { accountPasswordPath, accountProfilePath } from "@/paths";
 
 const AccountTabs = () => {
   const pathname = usePathname();
