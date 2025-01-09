@@ -12,7 +12,12 @@ import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketsSkeleton } from "@/features/ticket/components/ticket-skeletons";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
 
-const TicketsPage = async () => {
+type SearchParams = Promise<{ query?: string }>;
+
+const TicketsPage = async (props: { searchParams?: SearchParams }) => {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || "";
+
   const { user } = await getCurrentSession();
 
   return (
@@ -31,7 +36,7 @@ const TicketsPage = async () => {
         </CardContent>
       </Card>
       <Suspense fallback={<TicketsSkeleton />}>
-        <TicketList userId={user?.id} />
+        <TicketList userId={user?.id} query={query} />
       </Suspense>
     </section>
   );

@@ -18,7 +18,7 @@ export default async function AuthenticatedLayout({
   return (
     <SidebarProvider defaultOpen={false}>
       <AppSidebar />
-      <main className="flex-1">{children}</main>
+      <main className="flex flex-1 flex-col">{children}</main>
     </SidebarProvider>
   );
 }
