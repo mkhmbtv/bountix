@@ -28,7 +28,7 @@ const Search = ({ placeholder }: SearchProps) => {
   }, 300);
 
   return (
-    <div className="w-full max-w-[420px]">
+    <div>
       <label htmlFor="search" className="sr-only">
         Search
       </label>

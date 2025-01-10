@@ -3,11 +3,12 @@ import { Heading } from "@/components/heading";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketsSkeleton } from "@/features/ticket/components/ticket-skeletons";
 
-type SearchParams = Promise<{ query?: string }>;
+type SearchParams = Promise<{ query?: string; sort?: string }>;
 
 const DashboardPage = async (props: { searchParams?: SearchParams }) => {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
+  const sort = searchParams?.sort || "";
 
   return (
     <section className="flex flex-col gap-y-8 px-8 py-24">
@@ -16,7 +17,7 @@ const DashboardPage = async (props: { searchParams?: SearchParams }) => {
         description="Tickets by everyone at one place"
       />
       <Suspense fallback={<TicketsSkeleton />}>
-        <TicketList query={query} />
+        <TicketList query={query} sort={sort} />
       </Suspense>
     </section>
   );

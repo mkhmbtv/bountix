@@ -1,6 +1,10 @@
 import { prisma } from "@/lib/prisma";
 
-export const getTickets = async (userId?: string, query?: string) => {
+export const getTickets = async (
+  userId?: string,
+  query?: string,
+  sort?: string,
+) => {
   return await prisma.ticket.findMany({
     where: {
       userId,
@@ -10,7 +14,8 @@ export const getTickets = async (userId?: string, query?: string) => {
       },
     },
     orderBy: {
-      createdAt: "desc",
+      ...(sort === "" && { createdAt: "desc" }),
+      ...(sort === "bounty" && { bounty: "desc" }),
     },
     include: {
       user: {
