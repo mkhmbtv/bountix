@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "./_components/header";
@@ -43,13 +44,15 @@ export default function RootLayout({
           } as React.CSSProperties
         }
       >
-        <ThemeProvider>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <div className="flex-1">{children}</div>
-          </div>
-          <Toaster expand richColors />
-        </ThemeProvider>
+        <NuqsAdapter>
+          <ThemeProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <div className="flex-1">{children}</div>
+            </div>
+            <Toaster expand richColors />
+          </ThemeProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

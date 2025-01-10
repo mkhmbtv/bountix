@@ -1,15 +1,15 @@
+import { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
 import { Heading } from "@/components/heading";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketsSkeleton } from "@/features/ticket/components/ticket-skeletons";
+import { searchParamsCache } from "@/features/ticket/search-params";
 
-type SearchParams = Promise<{ query?: string; sort?: string }>;
+type DashboardPageProps = {
+  searchParams: Promise<SearchParams>;
+};
 
-const DashboardPage = async (props: { searchParams?: SearchParams }) => {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
-  const sort = searchParams?.sort || "";
-
+const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
   return (
     <section className="flex flex-col gap-y-8 px-8 py-24">
       <Heading
@@ -17,7 +17,9 @@ const DashboardPage = async (props: { searchParams?: SearchParams }) => {
         description="Tickets by everyone at one place"
       />
       <Suspense fallback={<TicketsSkeleton />}>
-        <TicketList query={query} sort={sort} />
+        <TicketList
+          searchParams={searchParamsCache.parse(await searchParams)}
+        />
       </Suspense>
     </section>
   );

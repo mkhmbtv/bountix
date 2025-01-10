@@ -1,3 +1,4 @@
+import { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
 import { Heading } from "@/components/heading";
 import {
@@ -11,14 +12,13 @@ import { getCurrentSession } from "@/features/auth/actions/get-current-session";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketsSkeleton } from "@/features/ticket/components/ticket-skeletons";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
+import { searchParamsCache } from "@/features/ticket/search-params";
 
-type SearchParams = Promise<{ query?: string; sort?: string }>;
+type TicketsPageProps = {
+  searchParams: Promise<SearchParams>;
+};
 
-const TicketsPage = async (props: { searchParams?: SearchParams }) => {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
-  const sort = searchParams?.sort || "";
-
+const TicketsPage = async ({ searchParams }: TicketsPageProps) => {
   const { user } = await getCurrentSession();
 
   return (
@@ -37,7 +37,10 @@ const TicketsPage = async (props: { searchParams?: SearchParams }) => {
         </CardContent>
       </Card>
       <Suspense fallback={<TicketsSkeleton />}>
-        <TicketList userId={user?.id} query={query} sort={sort} />
+        <TicketList
+          userId={user?.id}
+          searchParams={searchParamsCache.parse(await searchParams)}
+        />
       </Suspense>
     </section>
   );
