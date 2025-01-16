@@ -41,7 +41,7 @@ const TicketsSkeleton = () => {
 
 const TicketSkeleton = () => {
   return (
-    <div className="flex justify-center py-24">
+    <div className="flex justify-center py-44">
       <TicketItemSkeleton isDetail />
     </div>
   );
