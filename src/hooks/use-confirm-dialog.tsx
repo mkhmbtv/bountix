@@ -60,8 +60,8 @@ const useConfirmDialog = ({
               actionState={actionState}
               onSuccess={handleSuccess}
             >
-              <Button type="submit">
-                {formFields}
+              {formFields}
+              <Button type="submit" disabled={isPending}>
                 {isPending && (
                   <LucideLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
                 )}
