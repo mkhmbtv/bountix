@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Spinner } from "@/components/spinner";
+import { CommentCreateForm } from "@/features/comments/components/comment-create-form";
 import { CommentList } from "@/features/comments/components/comment-list";
 import { TicketItem } from "@/features/ticket/components/ticket-item";
 import { TicketItemSkeleton } from "@/features/ticket/components/ticket-skeletons";
@@ -32,6 +33,7 @@ const TicketPage = async ({
         <Suspense fallback={<TicketItemSkeleton isDetail />}>
           <TicketItem ticket={ticket} isDetail />
         </Suspense>
+        <CommentCreateForm ticketId={ticket.id} />
         <Suspense fallback={<Spinner />}>
           <CommentList ticketId={ticket.id} />
         </Suspense>
