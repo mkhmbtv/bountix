@@ -1,17 +1,15 @@
 import { Placeholder } from "@/components/placeholder";
 import { getCurrentSession } from "@/features/auth/actions/get-current-session";
 import { isOwner } from "@/features/auth/utils/user";
-import { getComments } from "../queries/get-comments";
+import { CommentWithUsername } from "../types";
 import { Comment } from "./comment";
 import { DeleteCommentButton } from "./delete-comment-button";
 
 type CommentListProps = {
-  ticketId: string;
+  comments: CommentWithUsername[];
 };
 
-const CommentList = async ({ ticketId }: CommentListProps) => {
-  const comments = await getComments(ticketId);
-
+const CommentList = async ({ comments }: CommentListProps) => {
   const { user } = await getCurrentSession();
 
   return (

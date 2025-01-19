@@ -1,20 +1,12 @@
 "use client";
 
-import { Prisma } from "@prisma/client";
 import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { CommentWithUsername } from "../types";
 
 type CommentProps = {
-  comment: Prisma.CommentGetPayload<{
-    include: {
-      user: {
-        select: {
-          username: true;
-        };
-      };
-    };
-  }>;
+  comment: CommentWithUsername;
   children?: React.ReactNode;
 };
 
