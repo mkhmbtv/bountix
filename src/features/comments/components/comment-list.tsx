@@ -3,7 +3,6 @@ import { getCurrentSession } from "@/features/auth/actions/get-current-session";
 import { isOwner } from "@/features/auth/utils/user";
 import { CommentWithUsername } from "../types";
 import { Comment } from "./comment";
-import { DeleteCommentButton } from "./delete-comment-button";
 
 type CommentListProps = {
   comments: CommentWithUsername[];
@@ -17,11 +16,11 @@ const CommentList = async ({ comments }: CommentListProps) => {
       <h1 className="text-xl font-semibold">Comments ({comments.length})</h1>
       {comments.length > 0 ? (
         comments.map((comment) => (
-          <Comment key={comment.id} comment={comment}>
-            {isOwner(user, comment) ? (
-              <DeleteCommentButton id={comment.id} />
-            ) : null}
-          </Comment>
+          <Comment
+            key={comment.id}
+            comment={comment}
+            isOwner={isOwner(user, comment)}
+          />
         ))
       ) : (
         <div className="pt-20">

@@ -1,8 +1,13 @@
 "use client";
 
-import { LucideLoaderCircle } from "lucide-react";
-import { cloneElement, useActionState, useState } from "react";
-import { Form } from "@/components/form/form";
+import {
+  cloneElement,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,13 +20,15 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { ActionState, EMPTY_ACTION_STATE } from "@/lib/action-state";
+import { useActionFeedback } from "./use-action-feedback";
 
 type UseConfirmDialogProps = {
   action: (state: ActionState, formData: FormData) => Promise<ActionState>;
-  trigger: React.ReactElement;
+  trigger: React.ReactElement | ((isPending: boolean) => React.ReactElement);
   title?: string;
   description?: string;
   formFields?: React.ReactNode;
+  onSuccess?: (actionState: ActionState) => void;
 };
 
 const useConfirmDialog = ({
@@ -30,6 +37,7 @@ const useConfirmDialog = ({
   title = "Are you sure?",
   description = "This action cannot be undone. Please confirm to proceed.",
   formFields,
+  onSuccess,
 }: UseConfirmDialogProps) => {
   const [actionState, formAction, isPending] = useActionState(
     action,
@@ -37,13 +45,42 @@ const useConfirmDialog = ({
   );
   const [isOpen, setIsOpen] = useState(false);
 
-  const dialogTrigger = cloneElement(trigger, {
-    onClick: () => setIsOpen((state) => !state),
-  });
+  const dialogTrigger = cloneElement(
+    typeof trigger === "function" ? trigger(isPending) : trigger,
+    {
+      onClick: () => setIsOpen((state) => !state),
+    },
+  );
 
-  const handleSuccess = () => {
-    setIsOpen(false);
-  };
+  const toastRef = useRef<string | number | null>(null);
+
+  useEffect(() => {
+    if (isPending) {
+      toastRef.current = toast.loading("Deleting...");
+    } else if (toastRef.current) {
+      toast.dismiss(toastRef.current);
+    }
+
+    return () => {
+      if (toastRef.current) {
+        toast.dismiss(toastRef.current);
+      }
+    };
+  }, [isPending]);
+
+  useActionFeedback(actionState, {
+    onSuccess: ({ actionState }) => {
+      if (actionState.message) {
+        toast.success(actionState.message);
+      }
+      onSuccess?.(actionState);
+    },
+    onError: ({ actionState }) => {
+      if (actionState.message) {
+        toast.error(actionState.message);
+      }
+    },
+  });
 
   const dialog = (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -55,19 +92,10 @@ const useConfirmDialog = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Form
-              action={formAction}
-              actionState={actionState}
-              onSuccess={handleSuccess}
-            >
+            <form action={formAction}>
               {formFields}
-              <Button type="submit" disabled={isPending}>
-                {isPending && (
-                  <LucideLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Confirm
-              </Button>
-            </Form>
+              <Button type="submit">Confirm</Button>
+            </form>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
