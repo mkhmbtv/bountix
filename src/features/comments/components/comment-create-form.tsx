@@ -11,18 +11,24 @@ import { createComment } from "../actions/create-comment";
 
 type CommentCreateFormProps = {
   ticketId: string;
+  onCreate?: () => void;
 };
 
-const CommentCreateForm = ({ ticketId }: CommentCreateFormProps) => {
+const CommentCreateForm = ({ ticketId, onCreate }: CommentCreateFormProps) => {
   const [actionState, action, isPending] = useActionState(
     createComment,
     EMPTY_ACTION_STATE,
   );
 
+  const handleSuccess = () => {
+    onCreate?.();
+  };
+
   return (
     <Form
       action={action}
       actionState={actionState}
+      onSuccess={handleSuccess}
       className="w-full max-w-[580px] gap-y-4"
     >
       <input type="hidden" name="ticketId" value={ticketId} />

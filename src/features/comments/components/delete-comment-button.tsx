@@ -7,9 +7,10 @@ import { deleteComment } from "../actions/delete-comment";
 
 type DeleteCommentButtonProps = {
   id: string;
+  onClick?: () => void;
 };
 
-const DeleteCommentButton = ({ id }: DeleteCommentButtonProps) => {
+const DeleteCommentButton = ({ id, onClick }: DeleteCommentButtonProps) => {
   const [deleteButton, deleteDialog] = useConfirmDialog({
     action: deleteComment,
     trigger: (isPending) => (
@@ -23,6 +24,7 @@ const DeleteCommentButton = ({ id }: DeleteCommentButtonProps) => {
       </Button>
     ),
     formFields: <input type="hidden" name="id" value={id} />,
+    onSuccess: onClick,
   });
 
   return (

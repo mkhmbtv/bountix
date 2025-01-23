@@ -8,4 +8,4 @@ export type CommentWithUsername = Prisma.CommentGetPayload<{
       };
     };
   };
-}>;
+}> & { isOwner: boolean };

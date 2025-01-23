@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import QueryProvider from "@/providers/query-provider";
 import { Header } from "./_components/header";
 
 const geistSans = localFont({
@@ -46,10 +47,12 @@ export default function RootLayout({
       >
         <NuqsAdapter>
           <ThemeProvider>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <div className="flex-1">{children}</div>
-            </div>
+            <QueryProvider>
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <div className="flex-1">{children}</div>
+              </div>
+            </QueryProvider>
             <Toaster expand richColors />
           </ThemeProvider>
         </NuqsAdapter>

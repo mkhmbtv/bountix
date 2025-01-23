@@ -4,14 +4,13 @@ import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CommentWithUsername } from "../types";
-import { DeleteCommentButton } from "./delete-comment-button";
 
 type CommentProps = {
   comment: CommentWithUsername;
-  isOwner: boolean;
+  children?: React.ReactNode;
 };
 
-const Comment = ({ comment, isOwner }: CommentProps) => {
+const Comment = ({ comment, children }: CommentProps) => {
   const { user, content, createdAt } = comment;
   const username = user?.username;
 
@@ -49,7 +48,7 @@ const Comment = ({ comment, isOwner }: CommentProps) => {
             </p>
           </div>
         </div>
-        {isOwner ? <DeleteCommentButton id={comment.id} /> : null}
+        {children}
       </CardHeader>
       <CardContent>
         <p className="whitespace-pre-line text-sm">{content}</p>

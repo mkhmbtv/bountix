@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { CommentCreateForm } from "@/features/comments/components/comment-create-form";
-import { CommentList } from "@/features/comments/components/comment-list";
+import { Comments } from "@/features/comments/components/comments";
 import { getComments } from "@/features/comments/queries/get-comments";
 import { TicketItem } from "@/features/ticket/components/ticket-item";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
@@ -13,10 +12,14 @@ const TicketPage = async ({
   params: Promise<{ ticketId: string }>;
 }) => {
   const ticketId = (await params).ticketId;
-  const ticketData = getTicket(ticketId);
-  const commentsData = getComments(ticketId);
+  const ticketPromise = getTicket(ticketId);
+  const commentsPromise = getComments(ticketId);
 
-  const [ticket, comments] = await Promise.all([ticketData, commentsData]);
+  const [ticket, commentsData] = await Promise.all([
+    ticketPromise,
+    commentsPromise,
+  ]);
+  const { data: comments, nextCursor } = commentsData;
 
   if (!ticket) {
     return notFound();
@@ -32,8 +35,11 @@ const TicketPage = async ({
       />
       <div className="mt-12 flex animate-fade-from-top flex-col items-center gap-y-8">
         <TicketItem ticket={ticket} isDetail />
-        <CommentCreateForm ticketId={ticket.id} />
-        <CommentList comments={comments} />
+        <Comments
+          ticketId={ticket.id}
+          initialComments={comments}
+          nextCursor={nextCursor}
+        />
       </div>
     </section>
   );
