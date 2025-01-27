@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SignInForm } from "@/features/auth/components/sign-in-form";
-import { passwordForgotPath, signUpPath } from "@/paths";
+import { signUpPath } from "@/paths";
 
 export default function SignInPage() {
   return (
@@ -25,9 +25,9 @@ export default function SignInPage() {
           <Link href={signUpPath()} className="text-sm text-primary">
             No account yet?
           </Link>
-          <Link href={passwordForgotPath()} className="text-sm text-primary">
-            Forgot password?
-          </Link>
+          {/* <Link href={passwordForgotPath()} className="text-sm text-primary"> */}
+          {/*   Forgot password? */}
+          {/* </Link> */}
         </CardFooter>
       </Card>
     </main>

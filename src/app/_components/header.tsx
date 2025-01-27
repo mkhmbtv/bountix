@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  LucideHouse,
-  LucideKanban,
-  LucideLock,
-  LucideUser,
-} from "lucide-react";
+import { LucideHouse, LucideLock, LucideUser } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
-import { Avatar, AvatarFallback,AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,9 +20,9 @@ import {
   accountPasswordPath,
   accountProfilePath,
   dashboardPath,
-  homePath,
   signUpPath,
 } from "@/paths";
+import { HeaderLogo } from "./header-logo";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,14 +30,8 @@ const Header = () => {
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex h-[--header-height] justify-between border-b border-border bg-background/80 px-5 backdrop-blur-sm">
-      <div className="flex items-center gap-x-2">
-        <Link
-          href={homePath()}
-          className={buttonVariants({ variant: "ghost" })}
-        >
-          <LucideKanban />
-          <h1 className="text-lg font-semibold">TicketBounty</h1>
-        </Link>
+      <div className="flex items-center">
+        <HeaderLogo />
       </div>
       <div className="flex items-center gap-x-2">
         <ThemeSwitcher />

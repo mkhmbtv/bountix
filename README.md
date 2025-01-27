@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bountix
+
+A modern, full-stack board for managing project tickets (bugs, tasks, TODOs).
+
+**Demo: [https://bountix.vercel.app/](https://bountix.vercel.app/)**
+
+## Features
+
+- Marketing landing page (`/`)
+- Dashboard pages with CRUD operations on tickets/comments/users
+- Email/password authentication with Oslo and Argon2
+- Modern form handling powered by React 19 features like Server Actions and useActionState  
+- Local middleware to protect Server Actions or validate Zod schemas
+- Typed URL state management with nuqs for persistent, shareable board filters
+- Infinite scrolling (via TanStack Query) to optimize large dataset rendering
+
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Database**: [Supabase](https://supabase.com/)
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Authentication**: [Oslo](https://oslojs.dev/) + [Argon2](https://www.npmjs.com/package/argon2)
+- **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
+- **Validation**: [Zod](https://zod.dev/)
+- **URL State**: [nuqs](https://nuqs.47ng.com/)
+- **Client-Side Data State**: [Tanstack Query](https://tanstack.com/query/latest)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/mkhmbtv/bountix
+cd bountix
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a .env file using .env.example:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm dlx prisma db push
+```
 
-## Learn More
+Then, seed the database with a default users, tickets and comments:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm run prisma-seed
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This will create the following users: 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Email: `admin@admin.com`
+- Password: `secret`
 
-## Deploy on Vercel
+- Email: `test@test.com`
+- Password: `secret`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+You can, of course, create new users as well through `/sign-up`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Finally, run the Next.js development server:
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
+

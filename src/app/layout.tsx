@@ -20,8 +20,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "TicketBounty",
-  description: "My TicketBounty application",
+  title: "Bountix",
+  description:
+    "Streamline bug tracking and task management with modern workflows.",
 };
 
 const HEADER_HEIGHT = "4rem";

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  LucideBook,
-  LucideCircleUser,
-  LucideKanban,
-  LucideLibrary,
-} from "lucide-react";
+import { LucideBook, LucideCircleUser, LucideLibrary } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -13,7 +8,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -55,11 +49,6 @@ export function AppSidebar() {
       collapsible="icon"
       className="top-[--header-height] pb-[--header-height]"
     >
-      <SidebarHeader className="flex flex-row items-center justify-between">
-        <Link href={dashboardPath()}>
-          <LucideKanban className="h-7 w-7" />
-        </Link>
-      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
